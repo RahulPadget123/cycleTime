@@ -4,7 +4,7 @@ const adminModel = require('../models/admin');
 const { Parser } = require('json2csv');
 
 async function handelCreateInfo(req, res){
-    let {name, stationNumber, stationName, ct1, ct2, ct3, ct4, ct5, numberOfStation, numberOfDevices, numberOfManPower, numberOfMachine} = req.body;
+    let {name, stationNumber, plant, project, model, section, stationName, ct1, ct2, ct3, ct4, ct5, numberOfStation, numberOfDevices, numberOfManPower, numberOfMachine, numberOfJigs, taktTime} = req.body;
     let Ct1A = Number(ct1);
     let Ct2A = Number(ct2);
     let Ct3A = Number(ct3);
@@ -30,11 +30,17 @@ async function handelCreateInfo(req, res){
     }
 
     let finalAvgCt = avgCt/largest;
+    let uph100Per = 3600/finalAvgCt;
+    let uph90Per = uph100Per*0.9;
 
     const user = await userModel.findOne({_id: req.params.userid});
     const info = await infoModel.create({
         name,
         user: user._id,
+        plant,
+        project,
+        model,
+        section,
         stationNumber,
         stationName,
         ct1,
@@ -47,7 +53,11 @@ async function handelCreateInfo(req, res){
         numberOfDevices,
         numberOfManPower,
         numberOfMachine,
-        finalAvgCt
+        numberOfJigs,
+        finalAvgCt,
+        taktTime,
+        uph100Per,
+        uph90Per,
     });
     user.info.push(info._id);
     await user.save();
@@ -88,18 +98,19 @@ async function handelLogout(req, res){
 // }
 
 
-async function handleDownloadInfo(req, res) {
+async function handleDownloadPlant60Info(req, res) {
     try {
         // Fetch all data from infoModel
-        const infoData = await infoModel.find({});
+        const infoData = await infoModel.find({plant: "sector-60"});
 
         // Check if data exists
         if (!infoData || infoData.length === 0) {
-            return res.status(404).json({
-                status: 404,
-                success: false,
-                msg: 'No data found in the database'
-            });
+            // return res.status(404).json({
+            //     status: 404,
+            //     success: false,
+            //     msg: 'No data found in the database'
+            // });
+            return res.redirect("/info/createInfo");
         }
 
         // Log raw data for debugging
@@ -111,7 +122,11 @@ async function handleDownloadInfo(req, res) {
                 name, 
                 user, // Assuming 'user' is a field in your model
                 stationNumber, 
-                stationName,  
+                stationName,
+                plant,
+                project,
+                model,
+                section,  
                 ct1, 
                 ct2, 
                 ct3, 
@@ -122,13 +137,21 @@ async function handleDownloadInfo(req, res) {
                 numberOfDevices, 
                 numberOfManPower, 
                 numberOfMachine,
-                finalAvgCt 
+                numberOfJigs,
+                finalAvgCt,
+                taktTime,
+                uph100Per,
+                uph90Per, 
             } = info;
             return { 
                 Name: name,              // Match csvFields case
                 User: user,             // Match csvFields case
                 StationNumber: stationNumber,
                 StationName: stationName,
+                Plant: plant,
+                Project: project,
+                Model: model,
+                Section: section,
                 Ct1: ct1,
                 Ct2: ct2,
                 Ct3: ct3,
@@ -139,7 +162,11 @@ async function handleDownloadInfo(req, res) {
                 NumberOfDevices: numberOfDevices,
                 NumberOfManPower: numberOfManPower,
                 NumberOfMachine: numberOfMachine,
-                FinalAvgCt: finalAvgCt
+                NumberOfJigs: numberOfJigs,
+                FinalAvgCt: finalAvgCt,
+                TaktTime: taktTime,
+                Uph100Per: uph100Per,
+                Uph90Per: uph90Per
             };
         });
 
@@ -148,10 +175,12 @@ async function handleDownloadInfo(req, res) {
 
         // Define CSV fields
         const csvFields = [
-            'Name',
-            'User',
             'StationNumber',
             'StationName',
+            'Plant',
+            'Project',
+            'Model',
+            'Section',
             'Ct1',
             'Ct2',
             'Ct3',
@@ -162,7 +191,264 @@ async function handleDownloadInfo(req, res) {
             'NumberOfDevices',
             'NumberOfManPower',
             'NumberOfMachine',
-            'FinalAvgCt'
+            'NumberOfJigs',
+            'FinalAvgCt',
+            'TaktTime',
+            'Uph100Per',
+            'Uph90Per',
+            'Remarks'
+        ];
+
+        // Create CSV parser and parse data
+        const csvParser = new Parser({ fields: csvFields });
+        const csvData = csvParser.parse(details);
+
+        // Log CSV data for debugging
+        console.log('Generated CSV data:', csvData);
+
+        // Set response headers for CSV download
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment; filename=usersData.csv');
+
+        res.status(200).send(csvData);
+
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(400).json({ 
+            status: 400, 
+            success: false, 
+            msg: error.message 
+        });
+    }
+}
+
+
+
+async function handleDownloadPlant63Info(req, res) {
+    try {
+        // Fetch all data from infoModel
+        const infoData = await infoModel.find({plant: "sector-63"});
+
+        // Check if data exists
+        if (!infoData || infoData.length === 0) {
+            // return res.status(404).json({
+            //     status: 404,
+            //     success: false,
+            //     msg: 'No data found in the database'
+            // });
+            return res.redirect("/info/createInfo");
+        }
+
+        // Log raw data for debugging
+        console.log('Raw data from database:', JSON.stringify(infoData, null, 2));
+
+        // Map data to an array of objects
+        const details = infoData.map(info => {
+            const { 
+                name, 
+                user, // Assuming 'user' is a field in your model
+                stationNumber, 
+                stationName,
+                plant,
+                project,
+                model,
+                section,    
+                ct1, 
+                ct2, 
+                ct3, 
+                ct4, 
+                ct5, 
+                avgCt,
+                numberOfStation, 
+                numberOfDevices, 
+                numberOfManPower, 
+                numberOfMachine,
+                numberOfJigs,
+                finalAvgCt,
+                taktTime,
+                uph100Per,
+                uph90Per, 
+            } = info;
+            return { 
+                Name: name,              // Match csvFields case
+                User: user,             // Match csvFields case
+                StationNumber: stationNumber,
+                StationName: stationName,
+                Plant: plant,
+                Project: project,
+                Model: model,
+                Section: section,
+                Ct1: ct1,
+                Ct2: ct2,
+                Ct3: ct3,
+                Ct4: ct4,
+                Ct5: ct5,
+                AvgCt: avgCt,
+                NumberOfStation: numberOfStation,
+                NumberOfDevices: numberOfDevices,
+                NumberOfManPower: numberOfManPower,
+                NumberOfMachine: numberOfMachine,
+                NumberOfJigs: numberOfJigs,
+                FinalAvgCt: finalAvgCt,
+                TaktTime: taktTime,
+                Uph100Per: uph100Per,
+                Uph90Per: uph90Per
+            };
+        });
+
+        // Log mapped data for debugging
+        console.log('Mapped details:', JSON.stringify(details, null, 2));
+
+        // Define CSV fields
+        const csvFields = [
+            'StationNumber',
+            'StationName',
+            'Plant',
+            'Project',
+            'Model',
+            'Section',
+            'Ct1',
+            'Ct2',
+            'Ct3',
+            'Ct4',
+            'Ct5',
+            'AvgCt',
+            'NumberOfStation',
+            'NumberOfDevices',
+            'NumberOfManPower',
+            'NumberOfMachine',
+            'NumberOfJigs',
+            'FinalAvgCt',
+            'TaktTime',
+            'Uph100Per',
+            'Uph90Per',
+            'Remarks'
+        ];
+
+        // Create CSV parser and parse data
+        const csvParser = new Parser({ fields: csvFields });
+        const csvData = csvParser.parse(details);
+
+        // Log CSV data for debugging
+        console.log('Generated CSV data:', csvData);
+
+        // Set response headers for CSV download
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment; filename=usersData.csv');
+
+        res.status(200).send(csvData);
+
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(400).json({ 
+            status: 400, 
+            success: false, 
+            msg: error.message 
+        });
+    }
+}
+
+
+
+async function handleDownloadPlant68Info(req, res) {
+    try {
+        // Fetch all data from infoModel
+        const infoData = await infoModel.find({plant: "sector-68"});
+
+        // Check if data exists
+        if (!infoData || infoData.length === 0) {
+            // return res.status(404).json({
+            //     status: 404,
+            //     success: false,
+            //     msg: 'No data found in the database'
+            // });
+            return res.redirect("/info/createInfo");
+        }
+
+        // Log raw data for debugging
+        console.log('Raw data from database:', JSON.stringify(infoData, null, 2));
+
+        // Map data to an array of objects
+        const details = infoData.map(info => {
+            const { 
+                name, 
+                user, // Assuming 'user' is a field in your model
+                stationNumber, 
+                stationName,
+                plant,
+                project,
+                model,
+                section,    
+                ct1, 
+                ct2, 
+                ct3, 
+                ct4, 
+                ct5, 
+                avgCt,
+                numberOfStation, 
+                numberOfDevices, 
+                numberOfManPower, 
+                numberOfMachine,
+                numberOfJigs,
+                finalAvgCt,
+                taktTime,
+                uph100Per,
+                uph90Per, 
+            } = info;
+            return { 
+                Name: name,              // Match csvFields case
+                User: user,             // Match csvFields case
+                StationNumber: stationNumber,
+                StationName: stationName,
+                Plant: plant,
+                Project: project,
+                Model: model,
+                Section: section,
+                Ct1: ct1,
+                Ct2: ct2,
+                Ct3: ct3,
+                Ct4: ct4,
+                Ct5: ct5,
+                AvgCt: avgCt,
+                NumberOfStation: numberOfStation,
+                NumberOfDevices: numberOfDevices,
+                NumberOfManPower: numberOfManPower,
+                NumberOfMachine: numberOfMachine,
+                NumberOfJigs: numberOfJigs,
+                FinalAvgCt: finalAvgCt,
+                TaktTime: taktTime,
+                Uph100Per: uph100Per,
+                Uph90Per: uph90Per
+            };
+        });
+
+        // Log mapped data for debugging
+        console.log('Mapped details:', JSON.stringify(details, null, 2));
+
+        // Define CSV fields
+        const csvFields = [
+            'StationNumber',
+            'StationName',
+            'Plant',
+            'Project',
+            'Model',
+            'Section',
+            'Ct1',
+            'Ct2',
+            'Ct3',
+            'Ct4',
+            'Ct5',
+            'AvgCt',
+            'NumberOfStation',
+            'NumberOfDevices',
+            'NumberOfManPower',
+            'NumberOfMachine',
+            'NumberOfJigs',
+            'FinalAvgCt',
+            'TaktTime',
+            'Uph100Per',
+            'Uph90Per',
+            'Remarks'
         ];
 
         // Create CSV parser and parse data
@@ -192,5 +478,7 @@ module.exports = {
     handelCreateInfo,
     handelcreateInfoPage,
     handelLogout,
-    handleDownloadInfo,
+    handleDownloadPlant60Info,
+    handleDownloadPlant63Info,
+    handleDownloadPlant68Info,
 }
