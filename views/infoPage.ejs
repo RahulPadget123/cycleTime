@@ -17,8 +17,18 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
+                  <!-- <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/info/downloadInfo">Dwonload</a>
+                  </li> -->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Download
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="/info/sector60">Palnt-60</a></li>
+                      <li><a class="dropdown-item" href="/info/sector63">Palnt-63</a></li>
+                      <li><a class="dropdown-item" href="/info/sector68">Plant-68</a></li>
+                    </ul>
                   </li>
                 </ul>
                 <div class="d-flex">
@@ -36,6 +46,22 @@
                     <div class="input-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" placeholder="Enter employee name" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="plant">Enter Plant</label>
+                        <input type="text" id="plant" name="plant" placeholder="sector-60, sector-63, sector-68" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="project">Enter Project</label>
+                        <input type="text" id="project" name="project" placeholder="Enter Project" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="model">Enter Model</label>
+                        <input type="text" id="model" name="model" placeholder="Enter Model" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="section">Enter Section</label>
+                        <input type="text" id="section" name="section" placeholder="Enter Section" required>
                     </div>
                     <div class="input-group">
                         <label for="stationNumber">Station Number</label>
@@ -90,6 +116,14 @@
                     <div class="input-group">
                         <label for="numberOfMachine">Number of Machines</label>
                         <input type="number" id="numberOfMachine" name="numberOfMachine" placeholder="Enter number of machines" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="numberOfJigs">Number of Jigs</label>
+                        <input type="number" id="numberOfJigs" name="numberOfJigs" placeholder="Enter number of Jigs" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="taktTime">Takt Time</label>
+                        <input type="number" id="taktTime" name="taktTime" placeholder="Enter Takt Time" required>
                     </div>
                     <button type="submit" class="btn-submit">Submit</button>
                     <!-- <button type="reset" class="btn-reset">Reset</button> -->
