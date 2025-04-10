@@ -8,6 +8,18 @@ const infoSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
     },
+    plant: {
+        type: String
+    },
+    project: {
+        type: String
+    },
+    model: {
+        type: String
+    },
+    section: {
+        type: String
+    },
     stationNumber: {
         type: Number
     },
@@ -44,9 +56,21 @@ const infoSchema = mongoose.Schema({
     numberOfMachine: {
         type: Number
     },
+    numberOfJigs: {
+        type: Number
+    },
     finalAvgCt: {
         type: Number
-    }
+    },
+    taktTime:{
+        type: Number
+    },
+    uph100Per: {
+        type: Number
+    },
+    uph90Per: {
+        type: Number
+    },
 });
 
 module.exports = mongoose.model("info",infoSchema);
