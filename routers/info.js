@@ -3,7 +3,9 @@ const router = express.Router();
 const { handelCreateInfo,
     handelcreateInfoPage,
     handelLogout,
-    handleDownloadInfo,
+    handleDownloadPlant60Info,
+    handleDownloadPlant63Info,
+    handleDownloadPlant68Info,
 } = require('../controllers/infio');
 const {isLoggedIn} = require('../middlewares/auth');
 
@@ -13,7 +15,11 @@ router.get("/createInfo", isLoggedIn, handelcreateInfoPage);
 
 router.get("/logout", handelLogout);
 
-router.get("/downloadInfo", handleDownloadInfo);
+router.get("/sector60", handleDownloadPlant60Info);
+
+router.get("/sector63", handleDownloadPlant63Info);
+
+router.get("/sector68", handleDownloadPlant68Info);
 
 
 module.exports = router;
