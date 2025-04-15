@@ -604,7 +604,28 @@ async function handelSector68Info(req, res){
     // console.log(info);
     if(!info) return res.redirect("/info/createInfo");
     let sector = "sector-68";
-    return res.render("downloadInfoPage",{info, sector});
+    let project1;
+    let project2;
+    let project3;
+    let project4;
+    let project5;
+    let project6;
+    info.forEach((item)=>{
+        if(item.project == "Xiaomi"){
+            project1 = item.project;
+        }else if(item.project == "Compal"){
+            project2 = item.project;
+        }else if(item.project == "Lenovo"){
+            project3 = item.project;
+        }else if(item.project == "Moto-SMT"){
+            project4 = item.project;
+        }else if(item.project == "Jio"){
+            project5 = item.project;
+        }else if(item.project == "Acer"){
+            project6 = item.project;
+        }
+    })
+    return res.render("downloadInfoPage",{project1, project2, project3, project4, project5, project6, sector});
 }
 
 async function handelSector60Info(req, res){
@@ -612,7 +633,28 @@ async function handelSector60Info(req, res){
     // console.log(info);
     if(!info) return res.redirect("/info/createInfo");
     let sector = "sector-60";
-    return res.render("downloadInfoPage",{info, sector});
+    let project1;
+    let project2;
+    let project3;
+    let project4;
+    let project5;
+    let project6;
+    info.forEach((item)=>{
+        if(item.project == "Xiaomi"){
+            project1 = item.project;
+        }else if(item.project == "Compal"){
+            project2 = item.project;
+        }else if(item.project == "Lenovo"){
+            project3 = item.project;
+        }else if(item.project == "Moto-SMT"){
+            project4 = item.project;
+        }else if(item.project == "Jio"){
+            project5 = item.project;
+        }else if(item.project == "Acer"){
+            project6 = item.project;
+        }
+    })
+    return res.render("downloadInfoPage",{project1, project2, project3, project4, project5, project6, sector});
 }
 
 async function handelSector63Info(req, res){
@@ -620,7 +662,28 @@ async function handelSector63Info(req, res){
     // console.log(info);
     if(!info) return res.redirect("/info/createInfo");
     let sector = "sector-63";
-    return res.render("downloadInfoPage",{info, sector});
+    let project1;
+    let project2;
+    let project3;
+    let project4;
+    let project5;
+    let project6;
+    info.forEach((item)=>{
+        if(item.project == "Xiaomi"){
+            project1 = item.project;
+        }else if(item.project == "Compal"){
+            project2 = item.project;
+        }else if(item.project == "Lenovo"){
+            project3 = item.project;
+        }else if(item.project == "Moto-SMT"){
+            project4 = item.project;
+        }else if(item.project == "Jio"){
+            project5 = item.project;
+        }else if(item.project == "Acer"){
+            project6 = item.project;
+        }
+    })
+    return res.render("downloadInfoPage",{project1, project2, project3, project4, project5, project6, sector});
 }
 
 async function handelSector58Info(req, res){
@@ -628,7 +691,28 @@ async function handelSector58Info(req, res){
     // console.log(info);
     if(!info) return res.redirect("/info/createInfo");
     let sector = "sector-58";
-    return res.render("downloadInfoPage",{info, sector});
+    let project1;
+    let project2;
+    let project3;
+    let project4;
+    let project5;
+    let project6;
+    info.forEach((item)=>{
+        if(item.project == "Xiaomi"){
+            project1 = item.project;
+        }else if(item.project == "Compal"){
+            project2 = item.project;
+        }else if(item.project == "Lenovo"){
+            project3 = item.project;
+        }else if(item.project == "Moto-SMT"){
+            project4 = item.project;
+        }else if(item.project == "Jio"){
+            project5 = item.project;
+        }else if(item.project == "Acer"){
+            project6 = item.project;
+        }
+    })
+    return res.render("downloadInfoPage",{project1, project2, project3, project4, project5, project6, sector});
 }
 
 async function handleDownloadProjectInfo(req, res) {
