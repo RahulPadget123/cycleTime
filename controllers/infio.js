@@ -599,6 +599,163 @@ async function handleDownloadPlant58Info(req, res) {
 }
 
 
+async function handelSector68Info(req, res){
+    let info = await infoModel.find({plant: "sector-68" || "sector 68" || "Sector 68" || "Sector-68"});
+    // console.log(info);
+    if(!info) return res.redirect("/info/createInfo");
+    let sector = "sector-68";
+    return res.render("downloadInfoPage",{info, sector});
+}
+
+async function handelSector60Info(req, res){
+    let info = await infoModel.find({plant: "sector-60" || "sector 60" || "Sector 60" || "Sector-60"});
+    // console.log(info);
+    if(!info) return res.redirect("/info/createInfo");
+    let sector = "sector-60";
+    return res.render("downloadInfoPage",{info, sector});
+}
+
+async function handelSector63Info(req, res){
+    let info = await infoModel.find({plant: "sector-63" || "sector 63" || "Sector 63" || "Sector-63"});
+    // console.log(info);
+    if(!info) return res.redirect("/info/createInfo");
+    let sector = "sector-63";
+    return res.render("downloadInfoPage",{info, sector});
+}
+
+async function handelSector58Info(req, res){
+    let info = await infoModel.find({plant: "sector-58" || "sector 58" || "Sector 58" || "Sector-58"});
+    // console.log(info);
+    if(!info) return res.redirect("/info/createInfo");
+    let sector = "sector-58";
+    return res.render("downloadInfoPage",{info, sector});
+}
+
+async function handleDownloadProjectInfo(req, res) {
+    try {
+        // Fetch all data from infoModel
+        const infoData = await infoModel.find({plant: req.params.plant, project: req.params.project});
+
+        // Check if data exists
+        if (!infoData || infoData.length === 0) {
+            // return res.status(404).json({
+            //     status: 404,
+            //     success: false,
+            //     msg: 'No data found in the database'
+            // });
+            return res.redirect("/info/createInfo");
+        }
+
+        // Log raw data for debugging
+        console.log('Raw data from database:', JSON.stringify(infoData, null, 2));
+
+        // Map data to an array of objects
+        const details = infoData.map(info => {
+            const { 
+                name, 
+                user, // Assuming 'user' is a field in your model
+                stationNumber, 
+                stationName,
+                plant,
+                project,
+                model,
+                section,  
+                ct1, 
+                ct2, 
+                ct3, 
+                ct4, 
+                ct5, 
+                avgCt,
+                numberOfStation, 
+                numberOfDevices, 
+                numberOfManPower, 
+                numberOfMachine,
+                numberOfJigs,
+                finalAvgCt,
+                taktTime,
+                uph100Per,
+                uph90Per, 
+            } = info;
+            return { 
+                Name: name,              // Match csvFields case
+                User: user,             // Match csvFields case
+                StationNumber: stationNumber,
+                StationName: stationName,
+                Plant: plant,
+                Project: project,
+                Model: model,
+                Section: section,
+                Ct1: ct1,
+                Ct2: ct2,
+                Ct3: ct3,
+                Ct4: ct4,
+                Ct5: ct5,
+                AvgCt: avgCt,
+                NumberOfStation: numberOfStation,
+                NumberOfDevices: numberOfDevices,
+                NumberOfManPower: numberOfManPower,
+                NumberOfMachine: numberOfMachine,
+                NumberOfJigs: numberOfJigs,
+                FinalAvgCt: finalAvgCt,
+                TaktTime: taktTime,
+                Uph100Per: uph100Per,
+                Uph90Per: uph90Per
+            };
+        });
+
+        // Log mapped data for debugging
+        console.log('Mapped details:', JSON.stringify(details, null, 2));
+
+        // Define CSV fields
+        const csvFields = [
+            'StationNumber',
+            'StationName',
+            'Plant',
+            'Project',
+            'Model',
+            'Section',
+            'Ct1',
+            'Ct2',
+            'Ct3',
+            'Ct4',
+            'Ct5',
+            'AvgCt',
+            'NumberOfStation',
+            'NumberOfDevices',
+            'NumberOfManPower',
+            'NumberOfMachine',
+            'NumberOfJigs',
+            'FinalAvgCt',
+            'TaktTime',
+            'Uph100Per',
+            'Uph90Per',
+            'Remarks'
+        ];
+
+        // Create CSV parser and parse data
+        const csvParser = new Parser({ fields: csvFields });
+        const csvData = csvParser.parse(details);
+
+        // Log CSV data for debugging
+        console.log('Generated CSV data:', csvData);
+
+        // Set response headers for CSV download
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment; filename=usersData.csv');
+
+        res.status(200).send(csvData);
+
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(400).json({ 
+            status: 400, 
+            success: false, 
+            msg: error.message 
+        });
+    }
+}
+
+
 module.exports = {
     handelCreateInfo,
     handelcreateInfoPage,
@@ -607,4 +764,9 @@ module.exports = {
     handleDownloadPlant63Info,
     handleDownloadPlant68Info,
     handleDownloadPlant58Info,
+    handelSector68Info,
+    handelSector60Info,
+    handelSector63Info,
+    handelSector58Info,
+    handleDownloadProjectInfo,
 }
