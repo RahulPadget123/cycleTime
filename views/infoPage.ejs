@@ -50,7 +50,13 @@
                     </div>
                     <div class="input-group">
                         <label for="plant">Enter Plant</label>
-                        <input type="text" id="plant" name="plant" placeholder="sector-58, sector-60, sector-63, sector-68" required>
+                        <select id="plant" name="plant" required>
+                            <option value="" disabled selected>Select a plant</option>
+                            <option value="sector-58">sector-58</option>
+                            <option value="sector-60">sector-60</option>
+                            <option value="sector-63">sector-63</option>
+                            <option value="sector-68">sector-68</option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="project">Enter Project</label>
@@ -62,7 +68,15 @@
                     </div>
                     <div class="input-group">
                         <label for="section">Enter Section</label>
-                        <input type="text" id="section" name="section" placeholder="SMT, BLT, LDA, FA, Testing, Packing" required>
+                        <select id="section" name="section" required>
+                            <option value="" disabled selected>Select a section</option>
+                            <option value="SMT">SMT</option>
+                            <option value="BLT">BLT</option>
+                            <option value="LDA">LDA</option>
+                            <option value="FA">FA</option>
+                            <option value="Testing">Testing</option>
+                            <option value="Packing">Packing</option>
+                        </select>
                     </div>
                     <div class="input-group">
                         <label for="stationNumber">Station Number</label>
