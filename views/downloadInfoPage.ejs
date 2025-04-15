@@ -22,26 +22,24 @@
                       Download
                     </a>
                     <ul class="dropdown-menu">
-                        <% info.forEach((item)=>{ %>
-                            <% if(item.project == "Xiaomi"){ %>
-                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= item.project %>"><%= item.project %></a></li>
+                            <% if(project1 == "Xiaomi"){ %>
+                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= project1 %>"><%= project1 %></a></li>
                             <% } %>
-                            <% if(item.project == "Compal"){ %>
-                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= item.project %>"><%= item.project %></a></li>
+                            <% if(project2 == "Compal"){ %>
+                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= project2 %>"><%= project2 %></a></li>
                             <% } %>
-                            <% if(item.project == "Lenovo"){ %>
-                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= item.project %>"><%= item.project %></a></li>
+                            <% if(project3 == "Lenovo"){ %>
+                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= project3 %>"><%= project3 %></a></li>
                             <% } %>
-                            <% if(item.project == "Moto-SMT"){ %>
-                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= item.project %>"><%= item.project %></a></li>
+                            <% if(project4 == "Moto-SMT"){ %>
+                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= project4 %>"><%= project4 %></a></li>
                             <% } %>
-                            <% if(item.project == "Jio"){ %>
-                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= item.project %>"><%= item.project %></a></li>
+                            <% if(project5 == "Jio"){ %>
+                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= project5 %>"><%= project5 %></a></li>
                             <% } %>
-                            <% if(item.project == "Acer"){ %>
-                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= item.project %>"><%= item.project %></a></li>
+                            <% if(project6 == "Acer"){ %>
+                                <li><a class="dropdown-item" href="/info/<%= sector %>/<%= project6 %>"><%= project6 %></a></li>
                             <% } %>
-                        <% }) %>
                         <li><a class="dropdown-item" href="/info/<%= sector %>">All-Project</a></li>
                     </ul>
                   </li>
