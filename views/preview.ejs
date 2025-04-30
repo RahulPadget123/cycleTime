@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Station Information Cards</title>
+    <link rel="stylesheet" href="/stylesheets/preview.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+<body>
+    <!-- bootstrap start -->
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/info/createInfo">Back</a>
+        </div>
+      </nav>
+
+     <!-- bootstrap end -->
+    <div class="container">
+        <% info.forEach((val) => { %>
+            <div class="card">
+                <h2>Station <%= val.stationNumber %></h2>
+                <div class="card-content">
+                    <p><strong>Station Number:</strong> <%= val.stationNumber %></p>
+                    <p><strong>Station Name:</strong> <%= val.name%></p>
+                    <p><strong>Plant:</strong> <%= val.plant %></p>
+                    <p><strong>Project:</strong> <%= val.project %></p>
+                    <p><strong>Model:</strong> <%= val.model %></p>
+                    <p><strong>Section:</strong> <%= val.section %></p>
+                    <p><strong>Ct1:</strong> <%= val.ct1 %></p>
+                    <p><strong>Ct2:</strong> <%= val.ct2%></p>
+                    <p><strong>Ct3:</strong> <%= val.ct3 %></p>
+                    <p><strong>Ct4:</strong> <%= val.ct4 %></p>
+                    <p><strong>Ct5:</strong> <%= val.ct5 %></p>
+                    <p><strong>Avg Ct:</strong> <%= val.avgCt%></p>
+                    <p><strong>Number of Stations:</strong> <%= val.numberOfStation %></p>
+                    <p><strong>Number of Devices:</strong> <%= val.numberOfDevices %></p>
+                    <p><strong>Number of Manpower:</strong> <%= val.numberOfManPower %></p>
+                    <p><strong>Number of Machines:</strong> <%= val.numberOfMachine %></p>
+                    <p><strong>Number of Jigs:</strong> <%= val.numberOfJigs %></p>
+                    <p><strong>Final Avg Ct:</strong> <%= val.finalAvgCt %></p>
+                    <p><strong>Takt Time:</strong> <%= val.taktTime %></p>
+                    <p><strong>Uph 100%:</strong> <%= val.uph100Per %></p>
+                    <p><strong>Uph 90%:</strong> <%= val.uph90Per %></p>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
+</html>
