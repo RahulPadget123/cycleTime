@@ -22,6 +22,18 @@
                   </li> -->
                   <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Preview
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/info/previewInfoPage58">Palnt-58</a></li>
+                        <li><a class="dropdown-item" href="/info/previewInfoPage60">Palnt-60</a></li>
+                        <li><a class="dropdown-item" href="/info/previewInfoPage63">Palnt-63</a></li>
+                        <li><a class="dropdown-item" href="/info/previewInfoPage68">Plant-68</a></li>
+                    </ul>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Download
                     </a>
                     <ul class="dropdown-menu">
@@ -44,40 +56,6 @@
             <div class="form-box">
                 <h2>Employee Cycle Time</h2>
                 <form action="/info/createInfo/<%= user._id %>" method="POST">
-                    <div class="input-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Enter employee name" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="plant">Enter Plant</label>
-                        <select id="plant" name="plant" required>
-                            <option value="" disabled selected>Select a plant</option>
-                            <option value="sector-58">sector-58</option>
-                            <option value="sector-60">sector-60</option>
-                            <option value="sector-63">sector-63</option>
-                            <option value="sector-68">sector-68</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label for="project">Enter Project</label>
-                        <input type="text" id="project" name="project" placeholder="Enter Project" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="model">Enter Model</label>
-                        <input type="text" id="model" name="model" placeholder="Enter Model" required>
-                    </div>
-                    <div class="input-group">
-                        <label for="section">Enter Section</label>
-                        <select id="section" name="section" required>
-                            <option value="" disabled selected>Select a section</option>
-                            <option value="SMT">SMT</option>
-                            <option value="BLT">BLT</option>
-                            <option value="LDA">LDA</option>
-                            <option value="FA">FA</option>
-                            <option value="Testing">Testing</option>
-                            <option value="Packing">Packing</option>
-                        </select>
-                    </div>
                     <div class="input-group">
                         <label for="stationNumber">Station Number</label>
                         <input type="number" id="stationNumber" name="stationNumber" placeholder="Enter station number" required>
