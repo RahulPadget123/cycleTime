@@ -1,13 +1,28 @@
 const jwt = require('jsonwebtoken');
 
-async function isLoggedIn(req,res,next){
-    if(req.cookies.token === ""){
-        return res.redirect("/adminLogin");
-    } else { 
+async function isLoggedIn(req, res, next) {
+    if (req.cookies.token === "") {
+        return res.redirect("/");
+    } else {
         let data = jwt.verify(req.cookies.token, "secret");
         req.user = data;
         next();
     }
 }
 
-module.exports = {isLoggedIn}
+async function isChecked(req, res, next) {
+    if (req.cookies.token === "") {
+        return res.redirect("/");
+    } else {
+        let data = jwt.verify(req.cookies.token, "hello");
+        req.user = data;
+        next();
+    }
+
+}
+
+
+module.exports = {
+    isLoggedIn,
+    isChecked,
+}
