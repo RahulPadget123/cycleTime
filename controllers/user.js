@@ -28,12 +28,10 @@ async function handelUserLogin(req, res){
     if(user.password === password){
         let token = jwt.sign({email: user.email, userid: user._id},"secret");
         res.cookie("token", token);
-        return res.redirect("/info/createInfo");
+        return res.redirect("/info/createUserBasicInfoPage");
     } else {
         return res.redirect("/user/userLogin");
     }
-
-    return res.render("infoPage",{user});
 
 }
 
