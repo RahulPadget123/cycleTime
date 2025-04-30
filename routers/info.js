@@ -12,12 +12,20 @@ const { handelCreateInfo,
     handelSector63Info,
     handelSector58Info,
     handleDownloadProjectInfo,
+    handelCreateUserBasicInfo,
+    handelCreateBasicInfoPage,
+    handelPreviewInfoPage58,
+    handelPreviewInfoPage60,
+    handelPreviewInfoPage63,
+    handelPreviewInfoPage68,
 } = require('../controllers/infio');
-const {isLoggedIn} = require('../middlewares/auth');
+const {isLoggedIn,
+    isChecked,
+} = require('../middlewares/auth');
 
 router.post("/createInfo/:userid",  handelCreateInfo);
 
-router.get("/createInfo", isLoggedIn, handelcreateInfoPage);
+router.get("/createInfo", isChecked, handelcreateInfoPage);
 
 router.get("/logout", handelLogout);
 
@@ -39,5 +47,16 @@ router.get("/sector58Info", handelSector58Info);
 
 router.get("/:plant/:project", handleDownloadProjectInfo);
 
+router.post("/createUserBasicInfo/:userid", handelCreateUserBasicInfo);
+
+router.get("/createUserBasicInfoPage", isLoggedIn, handelCreateBasicInfoPage);
+
+router.get("/previewInfoPage58", handelPreviewInfoPage58);
+
+router.get("/previewInfoPage60", handelPreviewInfoPage60);
+
+router.get("/previewInfoPage63", handelPreviewInfoPage63);
+
+router.get("/previewInfoPage68", handelPreviewInfoPage68);
 
 module.exports = router;
