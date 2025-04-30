@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const basicInfo = require('./basicInfo');
 
 const userSchema = mongoose.Schema({
     email: {
@@ -11,12 +12,6 @@ const userSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'admin'
     },
-    info: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'info'
-        }
-    ]
 });
 
 module.exports = mongoose.model("user", userSchema);
