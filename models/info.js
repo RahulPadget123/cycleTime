@@ -4,9 +4,9 @@ const infoSchema = mongoose.Schema({
     name: {
         type: String
     },
-    user: {
+    userInfo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'basicInfo'
     },
     plant: {
         type: String
