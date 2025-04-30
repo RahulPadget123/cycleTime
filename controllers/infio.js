@@ -1,10 +1,12 @@
 const infoModel = require('../models/info');
 const userModel = require('../models/user');
 const adminModel = require('../models/admin');
+const basicInfoModel = require('../models/basicInfo');
+const jwt = require('jsonwebtoken');
 const { Parser } = require('json2csv');
 
 async function handelCreateInfo(req, res){
-    let {name, stationNumber, plant, project, model, section, stationName, ct1, ct2, ct3, ct4, ct5, numberOfStation, numberOfDevices, numberOfManPower, numberOfMachine, numberOfJigs, taktTime} = req.body;
+    let {stationNumber, stationName, ct1, ct2, ct3, ct4, ct5, numberOfStation, numberOfDevices, numberOfManPower, numberOfMachine, numberOfJigs, taktTime} = req.body;
     let Ct1A = Number(ct1);
     let Ct2A = Number(ct2);
     let Ct3A = Number(ct3);
@@ -33,14 +35,14 @@ async function handelCreateInfo(req, res){
     let uph100Per = 3600/finalAvgCt;
     let uph90Per = uph100Per*0.9;
 
-    const user = await userModel.findOne({_id: req.params.userid});
+    const user = await basicInfoModel.findOne({_id: req.params.userid});
     const info = await infoModel.create({
-        name,
+        name: user.name,
         user: user._id,
-        plant,
-        project,
-        model,
-        section,
+        plant: user.plant,
+        project: user.project,
+        model: user.model,
+        section: user.section,
         stationNumber,
         stationName,
         ct1,
@@ -59,14 +61,61 @@ async function handelCreateInfo(req, res){
         uph100Per,
         uph90Per,
     });
-    user.info.push(info._id);
+    user.infos.push(info._id);
     await user.save();
     return res.redirect("/info/createInfo");
 }
 
-async function handelcreateInfoPage(req, res){
+//newly added
+async function handelCreateUserBasicInfo(req, res){
+    let {name, plant, project, model, section} = req.body;
+    // const user = await userModel.findOne({email: req.user.email});
+    const basicInfo = await basicInfoModel.create({
+        name,
+        // user: user._id,
+        plant,
+        project,
+        model,
+        section
+    });
+    // user.userInfo.push(basicInfo._id);
+    // await user.save();
+    let tokenInfo = jwt.sign({userId: basicInfo._id}, "hello");
+    res.cookie("token", tokenInfo);
+    return res.redirect("/info/createInfo");
+}
+
+async function handelCreateBasicInfoPage(req, res){
     let user = await userModel.findOne({email: req.user.email});
-    return res.render("infoPage",{user});
+    res.cookie("token", "");
+    return res.render("mainInfoPage", {user});
+
+}
+
+async function handelPreviewInfoPage58(req,res){
+    let info = await infoModel.find({plant: "sector-58" || "sector 58" || "Sector 58" || "Sector-58"});
+    return res.render("preview",{info});
+}
+
+async function handelPreviewInfoPage60(req,res){
+    let info = await infoModel.find({plant: "sector-60" || "sector 60" || "Sector 60" || "Sector-60"});
+    return res.render("preview",{info});
+}
+
+async function handelPreviewInfoPage63(req,res){
+    let info = await infoModel.find({plant: "sector-63" || "sector 63" || "Sector 63" || "Sector-63"});
+    return res.render("preview",{info});
+}
+
+async function handelPreviewInfoPage68(req,res){
+    let info = await infoModel.find({plant: "sector-68" || "sector 68" || "Sector 68" || "Sector-68"});
+    return res.render("preview",{info});
+}
+//end of newly added
+
+async function handelcreateInfoPage(req, res){
+    let user = await basicInfoModel.findOne({_id: req.user.userId});
+    return res.render("infoPage", {user});
 }
 
 async function handelLogout(req, res){
@@ -853,4 +902,10 @@ module.exports = {
     handelSector63Info,
     handelSector58Info,
     handleDownloadProjectInfo,
+    handelCreateUserBasicInfo,
+    handelCreateBasicInfoPage,
+    handelPreviewInfoPage58,
+    handelPreviewInfoPage60,
+    handelPreviewInfoPage63,
+    handelPreviewInfoPage68,
 }
