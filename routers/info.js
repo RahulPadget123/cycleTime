@@ -18,6 +18,7 @@ const { handelCreateInfo,
     handelPreviewInfoPage60,
     handelPreviewInfoPage63,
     handelPreviewInfoPage68,
+    handelDeleteInfo,
 } = require('../controllers/infio');
 const {isLoggedIn,
     isChecked,
@@ -58,5 +59,7 @@ router.get("/previewInfoPage60", handelPreviewInfoPage60);
 router.get("/previewInfoPage63", handelPreviewInfoPage63);
 
 router.get("/previewInfoPage68", handelPreviewInfoPage68);
+
+router.get("/:deleteInfoId", handelDeleteInfo);
 
 module.exports = router;
