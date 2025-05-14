@@ -31,6 +31,8 @@ async function handelCreateInfo(req, res){
         largest = noMac;
     }
 
+    
+
     let finalAvgCt = avgCt/largest;
     let uph100Per = 3600/finalAvgCt;
     let uph90Per = uph100Per*0.9;
@@ -111,6 +113,12 @@ async function handelPreviewInfoPage68(req,res){
     let info = await infoModel.find({plant: "sector-68" || "sector 68" || "Sector 68" || "Sector-68"});
     return res.render("preview",{info});
 }
+
+async function handelDeleteInfo(req, res){
+    await infoModel.findOneAndDelete({_id: req.params.deleteInfoId});
+    return res.redirect("/info/createInfo");
+}
+
 //end of newly added
 
 async function handelcreateInfoPage(req, res){
@@ -908,4 +916,5 @@ module.exports = {
     handelPreviewInfoPage60,
     handelPreviewInfoPage63,
     handelPreviewInfoPage68,
+    handelDeleteInfo,
 }
