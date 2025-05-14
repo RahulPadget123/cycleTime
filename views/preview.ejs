@@ -23,8 +23,7 @@
                 <h2>Station <%= val.stationNumber %></h2>
                 <div class="card-content">
                     <p><strong>Station Number:</strong> <%= val.stationNumber %></p>
-                    <p><strong>Station Name:</strong> <%= val.stationName %></p>
-                    <p><strong>Employee Name:</strong> <%= val.name%></p>
+                    <p><strong>Station Name:</strong> <%= val.name%></p>
                     <p><strong>Plant:</strong> <%= val.plant %></p>
                     <p><strong>Project:</strong> <%= val.project %></p>
                     <p><strong>Model:</strong> <%= val.model %></p>
@@ -45,6 +44,7 @@
                     <p><strong>Uph 100%:</strong> <%= val.uph100Per %></p>
                     <p><strong>Uph 90%:</strong> <%= val.uph90Per %></p>
                 </div>
+                <a href="/info/<%= val._id %>" class="btn btn-outline-danger">Delete</a>
             </div>
         <% }) %>
     </div>
